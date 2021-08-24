@@ -1,0 +1,69 @@
+{% extends "snippets/layout/base.html" %}
+{% block title %}Konfirmasi Vaksin{% endblock %}|
+
+{% block content %}
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p}}
+		
+		<table class="table form-table table-bordered table-sm">
+                            <thead class="text-center">
+                            <tr>
+                                <th>Class</th>
+                                <th>English</th>
+                                <th>Nepali</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for form_data in formset %}
+                                <tr class="item">
+                                    <td>
+                                        {{ form_data.no_ktp }}
+                                    </td>
+                                    <td>
+                                        {{ form_data.name }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.relationship }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.age }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.ask_1 }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.ask_2 }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.ask_3 }}
+                                    </td>
+                                    <td>
+                                    	{{ form_data.ask_4 }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-form-row"
+                                                id="{{ formset.prefix }}">
+                                          
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="9"
+                                    style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                                    <button type="button" class="btn btn-sm btn-success add-form-row"
+                                            id="{{ formset.prefix }}">
+                                       Add
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        {{ formset.management_form }}
+
+		<button type="submit">Submit</button>
+	</form>
+{% endblock %}

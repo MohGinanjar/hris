@@ -1,0 +1,91 @@
+{% extends 'layouts/base-fullscreen.html' %}
+
+{% block title %} Thank You{% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-8">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-8">
+
+              <div class="text-muted text-center mt-2 mb-3">
+                Terima Kasih     
+              </div>
+
+              <div class="text-center mb-8">
+                Atas Dukungan Anda ..
+              </div>
+              <h2>PT. HINO MOTORS SALES INDONESIA</h2>
+    <h2>PANITIA VAKSIN COVID-19</h2>    
+    <hr>
+  <hr>  KONFIRMASI PESERTA
+  <hr>
+Yang bertanda tangan dibawah ini :
+
+<hr>
+    <div class="col-md-4">
+
+        <form action="" method="post">{% csrf_token %}
+            <hr>
+            {{ form.as_p }}
+            <hr>
+            <head>Sehubungan dengan acara “VASIN COVID-19” di PT HINO MOTORS SALES INDONESIA pada tanggal, 27 April 2021 
+                Adapun peserta dapat saya konfirmasikan sbb :</head>
+                <div class="table-responsive">
+            <table class="table align-items-center table-flus">
+
+                {{ familymembers.management_form }}
+
+                {% for form in familymembers.forms %}
+                    {% if forloop.first %}
+                        <thead>
+                        <tr>
+                            {% for field in form.visible_fields %}
+                                <th>{{ field.label|capfirst }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                    {% endif %}
+                    <tr class="{% cycle row1 row2 %} formset_row">
+                        {% for field in form.visible_fields %}
+                            <td>
+                                {# Include the hidden fields in the form #}
+                                {% if forloop.first %}
+                                    {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+                                {% endif %}
+                                {{ field.errors.as_ul }}
+                                {{ field }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Save"/> <a href="{% url 'poll:profile-list' %}">back to the list</a>
+        </form>
+    </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              
+            </div>
+            <div class="col-6 text-right">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

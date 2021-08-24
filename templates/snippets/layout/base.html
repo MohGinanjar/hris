@@ -1,0 +1,1177 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>
+      HRIS - |{% block title %}{% endblock %}
+    </title>
+
+    <style>
+      #loader {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: #fff;
+        z-index: 90000;
+      }
+
+      #loader.fadeOut {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        background-color: #333;
+        border-radius: 100%;
+        -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+        animation: sk-scaleout 1.0s infinite ease-in-out;
+      }
+
+      @-webkit-keyframes sk-scaleout {
+        0% { -webkit-transform: scale(0) }
+        100% {
+          -webkit-transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+
+      @keyframes sk-scaleout {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 100% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+
+      .errorlist{
+        list-style-type: none;
+        color: red;
+        font-size: 12px;
+        padding: 0;
+        border-color: red;
+        
+        
+    }
+    .input:invalid{
+      color: red;
+    }
+
+	.center {
+  text-align: center;
+}
+
+.paginations {
+  display: inline-block;
+}
+
+.paginations a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.paginations a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.paginations a:hover:not(.active) {background-color: #ddd;}
+
+.paginationss {
+  display: inline-block;
+}
+
+.paginationss a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.paginationss a.active {
+  background-color: #e41212;
+  color: white;
+  border: 1px solid #e41212;
+}
+
+.paginationss a:hover:not(.active) {background-color: #ddd;}
+
+    
+    </style>
+    <link href="{% static "css/style_min.css"  %}" rel="stylesheet" type="text/css" >
+    <link href="{% static "css/style.css"  %}" rel="stylesheet" type="text/css" >
+	<link href="{% static "css/jquery-clockpicker.min.css"  %}" rel="stylesheet" type="text/css" >
+	<link href="{% static "css/jquery-clockpicker.css"  %}" rel="stylesheet" type="text/css" >
+	<link href="{% static "css/bootstrap-clockpicker.min.css"  %}" rel="stylesheet" type="text/css" >
+	<link href="{% static "css/bootstrap-clockpicker.css"  %}" rel="stylesheet" type="text/css" >
+
+    <!-- Specific Page CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+  </head>
+  <body class="app">
+    <!-- @TOC -->
+    <!-- =================================================== -->
+    <!--
+      + @Page Loader
+      + @App Content
+          - #Left Sidebar
+              > $Sidebar Header
+              > $Sidebar Menu
+
+          - #Main
+              > $Topbar
+              > $App Screen Content
+    -->
+
+    <!-- @Page Loader -->
+    <!-- =================================================== -->
+    <div id="loader">
+      <div class="spinner"></div>
+	</div>
+	
+
+    <script>
+      window.addEventListener('load', function load() {
+        const loader = document.getElementById('loader');
+        setTimeout(function() {
+          loader.classList.add('fadeOut');
+        }, 300);
+      });
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+        'use strict';
+    
+        window.addEventListener('load', function() {
+            var form = document.getElementById('needs-validation');
+            form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+        }, false);
+        })();
+    </script>
+
+    <!-- @App Content -->
+    <!-- =================================================== -->
+    <div>
+
+      
+      <!-- #Main ============================ -->
+      <!-- <div class="page-container"> -->
+
+        
+
+        <!-- ### $App Screen Content ### -->
+        <main class="main-content bgc-grey-50">
+          <div id="mainContent">
+            
+				{% if messages %}
+				{% for message in messages %}
+				{% if message.tags == 'success' %}
+				
+				
+				<div class="alert alert-success" role="alert">
+					<div class="masonry-sizer col-md-6"></div>
+					<div class="masonry-item col-md-12">
+						{{ message }}
+					<button type="button" class="close" data-dismiss="alert">
+					
+					<i class="ace-icon fa fa-times"></i>
+				</button>
+				</div>
+			</div>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+
+            {% block content %}{% endblock content %}  
+          
+          </div>
+        </main>
+
+        {% include 'snippets/layout/footer.html' %}
+
+    </div>
+    <script src="{% static "js/vendor.js" %}"></script>
+    <script src="{% static "js/bundle.js" %}"></script>
+    <script src="{% static "js/ace.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/jquery-2.1.4.min.js" %}"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="{% static "js/jquery-1.11.3.min.js" %}"></script>
+<![endif]-->
+    <script type="text/javascript">
+      if ('ontouchstart' in document.documentElement) document.write("<script src='{% static "js/jquery.mobile.custom.min.js" %}'>" + "<" + "/script>");
+    </script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <!-- page specific plugin scripts -->
+
+    <!--[if lte IE 8]>
+      <script src="{% static "js/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{% static "js/jquery-ui.custom.min.js" %}"></script>
+    <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
+    <script src="{% static "js/jquery.easypiechart.min.js" %}"></script>
+    <script src="{% static "js/jquery.sparkline.index.min.js" %}"></script>
+    <script src="{% static "js/jquery.flot.min.js" %}"></script>
+    <script src="{% static "js/jquery.flot.pie.min.js" %}"></script>
+    <script src="{% static "js/jquery.flot.resize.min.js" %}"></script>
+    <script src="{% static "js/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "js/jquery.dataTables.bootstrap.min.js" %}"></script>
+    <script src="{% static "js/dataTables.buttons.min.js" %}"></script>
+    <script src="{% static "js/buttons.flash.min.js" %}"></script>
+    <script src="{% static "js/buttons.html5.min.js" %}"></script>
+    <script src="{% static "js/buttons.print.min.js" %}"></script>
+    <script src="{% static "js/buttons.colVis.min.js" %}"></script>
+    <script src="{% static "js/dataTables.select.min.js" %}"></script>
+    <script src="{% static "js/ace-elements.min.js" %}"></script>
+    <script src="{% static "js/ace.min.js" %}"></script>
+    <script src="{% static "js/tree.min.js" %}"></script>
+    <script src="{% static "js/select2.min.js" %}"></script>
+    <script src="{% static "js/jquery-ui.custom.min.js" %}"></script>
+    <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
+    <script src="{% static "js/holder.min.js" %}"></script>
+    <script src="{% static "js/daterangepicker.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-datepicker.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-timepicker.min.js" %}"></script>
+    <script src="{% static "js/jquery.hotkeys.index.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-wysiwyg.min.js" %}"></script>
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-multiselect.min.js" %}"></script>
+    <script src="{% static "js/emp.js" %}"></script>
+    <script src="{% static "js/formset.js" %}"></script>
+	<script src="{% static "formset/jquery.formset.js" %}"></script>
+    <script src="{% static "js/dropzone.js" %}"></script>
+    <script src="{% static "js/dropzone.min.js" %}"></script>
+	<script src="{% static "js/pop.js" %}"></script>
+	<script src="{% static "js/jquery-clockpicker.min.js"  %}"></script>
+	<script src="{% static "js/jquery-clockpicker.js"  %}"></script>
+	<script src="{% static "js/bootstrap-clockpicker.min.js"  %}"></script>
+	<script src="{% static "js/bootstrap-clockpicker.js"  %}"></script>
+    <script type="text/javascript">
+	jQuery(function ($) {
+
+		$('.formset_row').formset({
+			
+            deleteText: 'delete',
+            prefix: 'familymember_set'
+        });
+
+        //function for date picker 
+		$('.date-picker').datepicker({
+			changeMonth: true,
+      		changeYear: true
+		})
+
+
+		{% if dtable == "true" %}
+
+		//initiate dataTables plugin
+		var myTable =
+			$('#dynamic-table')
+
+				.DataTable({
+					bAutoWidth: false,
+					"aaSorting": [],
+					'processing': true,
+					'language': {
+						'loadingRecords': '&nbsp;',
+						'processing': '<div class="spinner"></div>'
+					},
+					select: {
+						style: 'multi'
+					}
+				});
+
+
+
+		$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+		new $.fn.dataTable.Buttons(myTable, {
+			buttons: [
+				{
+					"extend": "colvis",
+					"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+					"className": "btn btn-white btn-primary btn-bold",
+					columns: ':not(:first):not(:last)'
+				},
+				{
+					"extend": "copy",
+					"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+					"className": "btn btn-white btn-primary btn-bold"
+				},
+				{
+					"extend": "csv",
+					"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+					"className": "btn btn-white btn-primary btn-bold"
+				},
+				{
+					"extend": "excel",
+					"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+					"className": "btn btn-white btn-primary btn-bold"
+				},
+				{
+					"extend": "pdf",
+					"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+					"className": "btn btn-white btn-primary btn-bold"
+				},
+				{
+					"extend": "print",
+					"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+					"className": "btn btn-white btn-primary btn-bold",
+					autoPrint: false,
+					message: 'This print was produced using the Print button for DataTables'
+				}
+			]
+		});
+		myTable.buttons().container().appendTo($('.tableTools-container'));
+
+		//style the message box
+		var defaultCopyAction = myTable.button(1).action();
+		myTable.button(1).action(function (e, dt, button, config) {
+			defaultCopyAction(e, dt, button, config);
+			$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+		});
+
+
+		var defaultColvisAction = myTable.button(0).action();
+		myTable.button(0).action(function (e, dt, button, config) {
+
+			defaultColvisAction(e, dt, button, config);
+
+
+			if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+				$('.dt-button-collection')
+					.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+					.find('a').attr('href', '#').wrap("<li />")
+			}
+			$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+		});
+
+		////
+
+		setTimeout(function () {
+			$($('.tableTools-container')).find('a.dt-button').each(function () {
+				var div = $(this).find(' > div').first();
+				if (div.length == 1) div.tooltip({ container: 'body', title: div.parent().text() });
+				else $(this).tooltip({ container: 'body', title: $(this).text() });
+			});
+		}, 500);
+
+
+
+
+
+		myTable.on('select', function (e, dt, type, index) {
+			if (type === 'row') {
+				$(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+			}
+		});
+		myTable.on('deselect', function (e, dt, type, index) {
+			if (type === 'row') {
+				$(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
+			}
+		});
+
+
+
+
+		/////////////////////////////////
+		//table checkboxes
+		$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+		//select/deselect all rows according to table header checkbox
+		$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
+			var th_checked = this.checked;//checkbox inside "TH" table header
+
+			$('#dynamic-table').find('tbody > tr').each(function () {
+				var row = this;
+				if (th_checked) myTable.row(row).select();
+				else myTable.row(row).deselect();
+			});
+		});
+
+		//select/deselect a row when the checkbox is checked/unchecked
+		$('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
+			var row = $(this).closest('tr').get(0);
+			if (this.checked) myTable.row(row).deselect();
+			else myTable.row(row).select();
+		});
+
+
+
+		$(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+			e.stopImmediatePropagation();
+			e.stopPropagation();
+			e.preventDefault();
+		});
+
+
+
+		//And for the first simple table, which doesn't have TableTools or dataTables
+		//select/deselect all rows according to table header checkbox
+		var active_class = 'active';
+		$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+			var th_checked = this.checked;//checkbox inside "TH" table header
+
+			$(this).closest('table').find('tbody > tr').each(function () {
+				var row = this;
+				if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+				else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+			});
+		});
+
+		//select/deselect a row when the checkbox is checked/unchecked
+		$('#simple-table').on('click', 'td input[type=checkbox]', function () {
+			var $row = $(this).closest('tr');
+			if ($row.is('.detail-row ')) return;
+			if (this.checked) $row.addClass(active_class);
+			else $row.removeClass(active_class);
+		});
+
+
+
+		/********************************/
+		//add tooltip for small view action buttons in dropdown menu
+		$('[data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
+
+		//tooltip placement on right or left
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+
+			var off2 = $source.offset();
+			//var w2 = $source.width();
+
+			if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+			return 'left';
+		}
+
+
+
+
+		/***************/
+		$('.show-details-btn').on('click', function (e) {
+			e.preventDefault();
+			$(this).closest('tr').next().toggleClass('open');
+			$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+		});
+		/***************/
+
+		{% endif %}
+
+
+		//Add Attachment
+		//the button to add a new file input
+		$('#id-add-attachment')
+			.on('click', function () {
+				var file = $('<input type="file" name="attachment[]" />').appendTo('#form-attachments');
+				file.ace_file_input();
+
+				file.closest('.ace-file-input')
+					.addClass('width-90 inline')
+					.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>')
+					.parent().append('<div class="action-buttons pull-right col-xs-1">\
+							<a href="#" data-action="delete" class="middle">\
+								<i class="ace-icon fa fa-trash-o red bigger-130 middle"></i>\
+							</a>\
+						</div>')
+					.find('a[data-action=delete]').on('click', function (e) {
+						//the button that removes the newly inserted file input
+						e.preventDefault();
+						$(this).closest('.file-input-container').hide(300, function () { $(this).remove() });
+					});
+			});
+
+		
+		//function for date picker 
+	
+		$('.end-date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true,
+			
+
+		})
+		$('.start-date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true,
+			
+
+
+		})
+			//show datepicker when clicking on the icon
+			.next().on(ace.click_event, function () {
+				$(this).prev().focus();
+			});
+
+		//or change it into a date range picker
+		$('.input-daterange').datepicker({
+			autoclose: true
+
+		});
+
+
+
+
+		//data for tree element
+		var category = {
+			'hmsi': { text: 'HMSI', type: 'folder' },
+		}
+
+		category['hmsi']['additionalParameters'] = {
+			'children': {
+           {% for divisi in list_divisi %}
+		'{{divisi}}' : { text: '<a href="{% url 'org: list_struktur' %}?divisi_filter={{divisi.id}}"><i class="ace-icon fa fa-book blue"></i> {{divisi}}</a>', type: 'item' }	,
+		{% endfor %}
+	}
+				}
+
+		/*
+				category['for-sale']['additionalParameters'] = {
+					'children' : {
+						'appliances' : {text: 'Appliances', type: 'item'},
+						'arts-crafts' : {text: 'Arts & Crafts', type: 'item'},
+						'clothing' : {text: 'Clothing', type: 'item'},
+						'computers' : {text: 'Computers', type: 'item'},
+						'jewelry' : {text: 'Jewelry', type: 'item'},
+						'office-business' : {text: 'Office', type: 'item'},
+						'sports-fitness' : {text: 'Sports & Fitness', type: 'item'}
+					}
+				}*/
+
+
+		$('#id_file_doc , #id-input-file-2').ace_file_input({
+			no_file: 'No File ...',
+			btn_choose: 'Choose',
+			btn_change: 'Change',
+			droppable: true,
+			onchange: null,
+			thumbnail: true, //| true | large
+			//whitelist:'gif|png|jpg|jpeg'
+			//blacklist:'exe|php|py|html'
+			//onchange:''
+			//
+		});
+
+	$(document).on("change", ".qty1", function () {
+		var sum = 0;
+		$(".qty1").each(function () {
+			sum += +$(this).val();
+		});
+		$(".total").val(sum);
+	});
+
+
+	$(document).on("change", ".qty1", function () {
+		var sum = 0;
+		$(".qty1").each(function () {
+			sum += +$(this).val();
+		});
+
+		$(".total").val(sum);
+	});
+
+	var textboxes = document.querySelectorAll(".sum");
+	textboxes.forEach(function (box) {
+		box.addEventListener("keyup", sumAll);
+	});
+
+	function sumAll() {
+		var total = 0;
+		textboxes.forEach(function (box) {
+			var val;
+			if (box.value == "") val = 0;
+			else val = parseInt(box.value);
+			total += val;
+		});
+		document.getElementById("total").innerText = total;
+	}
+
+
+	// $('#bdl_perkm').keyup(function(ev) {
+	// 	var price = $('#start_km').val();
+	// 	var qty = $('#end_km').val();
+	// 	var gst = $(this).val();
+	// 	var reeta =  qty - price;
+	// 	var tot_price = reeta * gst;
+	// 	$('#total_bdl_perkm').val(tot_price);
+	//   });
+
+	// $(document).on("keyup", "#bdl_perkm, #start_km, #end_km,#total_bdl_perkm", function () {
+	// 	start = $('#start_km').val();
+	// 	end = $('#end_km').val();
+	// 	bdl_km = $('#bdl_perkm').val();
+	// 	sub = end - start;
+	// 	grand = sub * bdl_km;
+	// 	$('#total_bdl_perkm').val(grand);
+	// });
+
+	// 	$(document).ready(function () {
+
+	//     // copy customer details to shipping
+	//     $('input.copy-input').on("change keyup paste", function () {
+	//         var thisID = $(this).attr('id');
+	//         $('input#' + thisID + "_ship").val($(this).val());
+	//     });
+
+	//     // add new product row on invoice
+	//     var cloned = $('#invoice_table tr:last').clone();
+	//     $(".add-row").click(function (e) {
+	//         e.preventDefault();
+	//         cloned.clone().appendTo('#invoice_table'); 
+	//     });
+
+	//     calculateTotal();
+
+	//     $('#invoice_table').on('change keyup paste', '.calculate', function() {
+	//         updateTotals(this);
+	//         calculateTotal();
+	//     });
+
+	// 	function updateTotals(elem) {
+	//         var tr = $(elem).closest('tr'),
+	//             quantity = $('[name="invoice_product_qty[]"]', tr).val(),
+	// 	        price = $('[name="invoice_product_price[]"]', tr).val(),
+	//             percent = $('[name="invoice_product_discount[]"]', tr).val(),
+	// 	        subtotal = parseInt(quantity) * parseFloat(price);
+	//         if(percent && $.isNumeric(percent) && percent !== 0){
+	//             subtotal = subtotal - ((parseInt(percent) / 100) * subtotal);
+	//         }
+	// 	    $('.calculate-sub', tr).val(subtotal.toFixed(2));
+	// 	}
+
+	// 	function calculateTotal(){
+
+	// 	    var grandTotal = ;
+	// 	    var totalQuantity = 0;
+	// 	    $('.calculate-sub').each(function(){
+	// 	        grandTotal += parseFloat($(this).val()) ;
+	// 	    });
+
+	// 	    $('.invoice-sub-total').text(parseFloat(grandTotal ).toFixed(2) );  
+	// 	}
+
+	// });
+
+	$(document).ready(function () {
+		// copy customer details to shipping
+		$('input.copy-input').on("change keyup paste", function () {
+			var thisID = $(this).attr('id');
+			$('input#' + thisID + "_ship").val($(this).val());
+		});
+		// add new product row on invoice
+		var cloned = $('#invoice_table tr:last').clone();
+		$(".add-row").click(function (e) {
+			e.preventDefault();
+			cloned.clone().appendTo('#invoice_table');
+		});
+		$('#invoice_table').on('change keyup paste', '.calculate', function () {
+			updateTotals(this);
+			calculateTotal(this);
+		});
+
+		calculateTotal(this);
+
+		function updateTotals(elem) {
+			var tr = $(elem).closest('tr'),
+				start_km = $('#start_km', tr).val(),
+				end_km = $('#end_km', tr).val(),
+				bdl_perkm = $('#bdl_perkm', tr).val(),
+				grand = parseInt(end_km) - parseInt(start_km);
+			totalbdl = grand * bdl_perkm;
+			subtotal = grand * bdl_perkm;
+			$('.parking', tr).each(function () {
+				subtotal += parseFloat($(this).val());
+			});
+			$('.calculate-sub', tr).val(subtotal);
+			$('.total_bdl_perkm', tr).val(totalbdl);
+		}
+
+
+		function calculateTotal() {
+			var sum = 0;
+			$(".calculate-sub").each(function () {
+				sum += +$(this).val();
+			});
+			$(".total").val(sum);
+		}
+	});
+
+
+	$(document).ready(function(){
+		var one_days = 24 * 60 * 60 * 1000;
+		var days = 0;
+		var start_date = $('.start-date-picker').val()
+		var end_date = $('.end-date-picker').val()
+
+
+	});
+
+	$(".end-date-picker").change(function () {
+		var start = new Date($('.start-date-picker').val());
+		var end = new Date($('.end-date-picker').val());
+
+	   var diff = new Date(end - start);
+	   var days=1;
+		days = diff / 1000 / 60 / 60 / 24;
+
+
+		if (days == NaN) {
+			$('.remain').val(0);
+		} else {
+			$('.remain').val(days+1);
+		}
+	})
+
+	$(".start-date-picker").change(function () {
+		var start = new Date($('.start-date-picker').val());
+		var end = new Date($('.end-date-picker').val());
+
+	   var diff = new Date(end - start);
+	   var days=1;
+		days = diff / 1000 / 60 / 60 / 24;
+
+
+		if (days == NaN) {
+			$('.remain').val(0);
+		} else {
+			$('.remain').val(days+1);
+		}
+	})
+	
+
+	
+
+
+	$('.selectinputfile.formset-field').ace_file_input({
+		style: 'well',
+		btn_choose: 'Invoice Input Here|.jpg',
+		btn_change: null,
+		no_icon: 'fa fa-cloud-upload',
+		droppable: true,
+		thumbnail: 'small',
+		onchange: null,
+		maxSize: 1000000,//~1 MB
+		allowExt: ['jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'bmp'], //large | fit
+		//,icon_remove:null//set null, to hide remove/reset button
+		/**,before_change:function(files, dropped) {
+			//Check an example below
+			//or examples/file-upload.html
+			return true;
+		}*/
+		/**,before_remove : function() {
+			return true;
+		}*/
+
+		preview_error: function (filename, error_code) {
+			//name of the file that failed
+			//error_code values
+			//1 = 'FILE_LOAD_FAILED',
+			//2 = 'IMAGE_LOAD_FAILED',
+			//3 = 'THUMBNAIL_FAILED'
+			//alert(error_code);
+		}
+
+	}).on('change', function () {
+		console.log($(this).data('ace_input_files'));
+		console.log($(this).data('ace_input_method'));
+	}).clone();
+
+
+
+
+
+	$('#id-input-file-3')
+		.ace_file_input('show_file_list', [
+			{ type: 'image', name: 'name of image', path: 'http://path/to/image/for/preview' },
+
+		]);
+
+	//////////////////
+	//select2
+	$('.selecttypebudget.formset-field').css('width', '300px').select2({
+		allowClear: true,
+	}).clone();
+
+	$('.selecttype.formset-field').css('width', '200px').select2({
+		allowClear: true,
+	}).clone();
+
+
+	$('.selecttype1.formset-field').css('width', '200px').select2({
+		allowClear: true,
+	}).clone();
+
+	$('.selecttype2.formset-field').css('width', '200px').select2({
+		allowClear: true,
+	}).clone();
+
+
+	$('.selecttype_trip.formset-field').css('width', '200px').select2({
+		allowClear: true,
+	}).clone();
+
+	$('.selecttype_city.formset-field').css('width', '200px').select2({
+		allowClear: true,
+	}).clone();
+
+
+	$('.selecttype_leave').css('width', '400px').select2({
+		allowClear: true,
+	}).clone();
+
+
+
+	// $(document).ready(function () {
+	//   $(".clone_select2").on('click', function () {
+	//     new_select2 = $("form").first().clone();
+	//     $('div').append(new_select2);
+
+	//     $('.selecttype.formset-field').css('width', '200px').select2({
+	//       allowClear: true,
+	//       placeholder: 'Select Type ...',
+
+	//     });
+
+	//     $(".selecttype.formset-field").last().next().next().remove();
+	//   });
+	// });
+
+
+
+
+
+
+	$('#select2-multiple-style .btn').on('click', function (e) {
+		var target = $(this).find('input[type=radio]');
+		var which = parseInt(target.val());
+		if (which == 2) $('.select2').addClass('tag-input-style');
+		else $('.select2').removeClass('tag-input-style');
+	});
+
+
+
+
+
+
+
+	//////////////////
+	$('.multiselect').multiselect({
+		enableFiltering: true,
+		enableHTML: true,
+		buttonClass: 'btn btn-white btn-primary',
+		templates: {
+			button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> &nbsp;<b class="fa fa-caret-down"></b></button>',
+			ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+			filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+			filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default btn-white btn-grey multiselect-clear-filter" type="button"><i class="fa fa-times-circle red2"></i></button></span>',
+			li: '<li><a tabindex="0"><label></label></a></li>',
+			divider: '<li class="multiselect-item divider"></li>',
+			liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+		}
+	});
+
+
+	$("#id-btn-dialog2").on('click', function (e) {
+		e.preventDefault();
+
+		$("#dialog-confirm").removeClass('hide').dialog({
+			resizable: false,
+			width: '320',
+			modal: true,
+			title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> Empty the recycle bin?</h4></div>",
+			title_html: true,
+			buttons: [
+				{
+					html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
+					"class": "btn btn-danger btn-minier",
+					click: function () {
+						$(this).dialog("close");
+					}
+				}
+				,
+				{
+					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+					"class": "btn btn-minier",
+					click: function () {
+						$(this).dialog("close");
+					}
+				}
+			]
+		});
+	});
+
+	var dataSource1 = function (options, callback) {
+		var $data = null
+		if (!("text" in options) && !("type" in options)) {
+			$data = category;//the root tree
+			callback({ data: $data });
+			return;
+		}
+		else if ("type" in options && options.type == "folder") {
+			if ("additionalParameters" in options && "children" in options.additionalParameters)
+				$data = options.additionalParameters.children || {};
+			else $data = {}//no data
+		}
+
+		callback({ data: $data })
+	}
+
+	$('#cat-tree').ace_tree({
+		dataSource: dataSource1,
+		multiSelect: true,
+		cacheItems: true,
+		'open-icon': 'ace-icon tree-minus',
+		'close-icon': 'ace-icon tree-plus',
+		'itemSelect': true,
+		'folderSelect': false,
+		'selected-icon': 'ace-icon fa fa-check',
+		'unselected-icon': 'ace-icon fa fa-times',
+		loadingHTML: '<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>'
+	});
+
+
+	$('.tree-container').ace_scroll({ size: 300, mouseWheelLock: true });
+	$('#cat-tree').on('closed.fu.tree disclosedFolder.fu.tree', function () {
+		$('.tree-container').ace_scroll('reset').ace_scroll('start');
+	});
+
+
+
+	//select2 location element
+
+
+
+	//jQuery ui distance slider
+	$("#slider-range").css('width', '150px').slider({
+		range: true,
+		min: 0,
+		max: 100,
+		values: [17, 67],
+		slide: function (event, ui) {
+			var val = ui.values[$(ui.handle).index() - 1] + "";
+
+			if (!ui.handle.firstChild) {
+				$("<div class='tooltip bottom in' style='display:none;left:-6px;top:14px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+					.prependTo(ui.handle);
+			}
+			$(ui.handle.firstChild).show().children().eq(1).text(val);
+		}
+	}).find('span.ui-slider-handle').on('blur', function () {
+		$(this.firstChild).hide();
+	});
+
+
+	//this is for demo only
+	$('.thumbnail').on('mouseenter', function () {
+		$(this).find('.info-label').addClass('label-primary');
+	}).on('mouseleave', function () {
+		$(this).find('.info-label').removeClass('label-primary');
+	});
+
+
+	//toggle display format buttons
+	$('#toggle-result-format .btn').tooltip({ container: 'body' }).on('click', function (e) {
+		$(this).siblings().each(function () {
+			$(this).removeClass($(this).attr('data-class')).addClass('btn-grey');
+		});
+		$(this).removeClass('btn-grey').addClass($(this).attr('data-class'));
+	});
+
+	////////////////////
+	//show different search page
+	$('#toggle-result-page .btn').on('click', function (e) {
+		var target = $(this).find('input[type=radio]');
+		var which = parseInt(target.val());
+		$('.search-page').parent().addClass('hide');
+		$('#search-page-' + which).parent().removeClass('hide');
+	});
+});
+
+	// $(document).on("change", ".calculate-sub", function () {
+
+	// 	});
+
+
+
+	$(document).on("change", ".qty1", function () {
+		var sum = 0;
+		$(".qty1").each(function () {
+			sum += +$(this).val();
+		});
+		$(".total").val(sum);
+	});
+
+	$(document).ready(function () {
+		$(".reply_open_modal").click(function () {
+			var id = $(this).parents("tr").children("td:eq(0)").text();
+			var name = $(this).parents("tr").children("td:eq(2)").text();
+			$("#logbook_note").val(id);
+			$("#id_logbook_note").text(name);
+		});
+
+
+		$(document).on("click", "#reply_btn", function () {
+
+			$(this).attr("disabled", "disabled")
+			$(this).text("Sending Reply...")
+
+			var id = $("#logbook_note").val();
+			var message = $("#id_logbook_note").val()
+
+			$.ajax({
+				url: '',
+				type: 'POST',
+				data: { id: id, message: message },
+			})
+				.done(function (response) {
+
+					if (response == "True") {
+						alert("Reply Sent")
+					}
+					else {
+						alert("Error in Sending Reply")
+					}
+					location.reload()
+				})
+				.fail(function () {
+					alert("Error in Sending Reply")
+				})
+		});
+
+	});
+
+
+	var modalDiv = $("#modal-div");
+
+	$(".open-modal").on("click", function () {
+		$.ajax({
+			url: $(this).attr("data-url"),
+			success: function (data) {
+				modalDiv.html(data);
+				$("#myEdit").modal();
+			}
+		});
+	});
+
+
+	$('#gritter-center').on(ace.click_event, function(){
+		$.gritter.add({
+			title: 'This is a centered notification',
+			text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+			class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+		});
+
+		return false;
+	});
+
+
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	  })
+
+	
+
+	$('.timepicker').clockpicker({
+		placement: 'bottom',
+		align: 'left',
+		'default': 'now',
+		autoclose: true,
+	});
+
+      $('.end-date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        
+  
+      })
+      $('.start-date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        
+  
+  
+      })
+
+      $(document).ready(function(){
+        var one_days = 24 * 60 * 60 * 1000;
+        var days = 0;
+        var start_date = $('.start-date-picker').val()
+        var end_date = $('.end-date-picker').val()
+    
+    
+      });
+    
+      $(".end-date-picker").change(function () {
+        var start = new Date($('.start-date-picker').val());
+        var end = new Date($('.end-date-picker').val());
+    
+         var diff = new Date(end - start);
+         var days=1;
+        days = diff / 1000 / 60 / 60 / 24;
+		
+    
+        if (days == isNaN) {
+          $('.remain').val(0);
+        } else {
+          $('.remain').val(days+1);
+        }
+      })
+    
+      $(".start-date-picker").change(function () {
+        var start = new Date($('.start-date-picker').val());
+        var end = new Date($('.end-date-picker').val());
+    
+         var diff = new Date(end - start);
+         var days=1;
+        days = diff / 1000 / 60 / 60 / 24;
+    
+    
+        if (days == isNaN) {
+          $('.remain').val(0);
+        } else {
+          $('.remain').val(days+1);
+        }
+      })
+    </script>
+    <!-- Specific Page JS goes HERE -->
+    {% block javascripts %}{% endblock javascripts %}
+
+  </body>
+
+</html>
